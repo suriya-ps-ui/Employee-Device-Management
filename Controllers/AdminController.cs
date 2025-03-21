@@ -35,7 +35,7 @@ namespace Controllers{
             var token = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
             try{await employeeApiServices.CreateEmployeeAsync(employee, token);}
-            catch(Exception ex){ModelState.AddModelError("",$"Creation failed:{ex.Message}"); return View();}
+            catch(Exception){ViewBag.Error="EmpID Already in use"; return View();}
             return RedirectToAction("ManageEmployees");
         }
         public async Task<IActionResult> EditEmployee(string empId){
@@ -72,6 +72,7 @@ namespace Controllers{
         public IActionResult CreateDevice(string empId,string deviceType){
             ViewBag.EmpId=empId;
             ViewBag.DeviceType=deviceType;
+            if (TempData["Error"] != null){ViewBag.Error = TempData["Error"];}
             return View();
         }
         [HttpPost]
@@ -90,7 +91,7 @@ namespace Controllers{
                     status=Request.Form["status"]
                 };
                 try{await deviceApiServices.CreateLaptopAsync(laptop, token);}
-                catch(Exception){RedirectToAction("CreateDevice");}
+                catch(Exception){TempData["Error"]="Laptop Host name Already in use";return RedirectToAction("CreateDevice",new{ deviceType,empId, });}
             }
             else if (deviceType=="Keyboard"){
                 var keyboard=new Keyboard{
@@ -101,7 +102,8 @@ namespace Controllers{
                     status=Request.Form["status"]
                 };
                 try{await deviceApiServices.CreateKeyboardAsync(keyboard, token);}
-                catch(Exception){RedirectToAction("CreateDevice");}            }
+                catch(Exception){TempData["Error"]="Keyboard ID Already in use";return RedirectToAction("CreateDevice",new{ deviceType,empId, });}
+                }
             else if (deviceType=="Mouse"){
                 var mouse=new Mouse{
                     empId=empId,
@@ -111,7 +113,8 @@ namespace Controllers{
                     status=Request.Form["status"]
                 };
                 try{await deviceApiServices.CreateMouseAsync(mouse, token);}
-                catch(Exception){RedirectToAction("CreateDevice");}            }
+                catch(Exception){TempData["Error"]="Mouse ID Already in use";return RedirectToAction("CreateDevice",new{ deviceType,empId, });}
+            }
             return RedirectToAction("ManageDevices",new { empId });
         }
         public async Task<IActionResult> EditDevice(string empId,string deviceType,string id){
@@ -199,7 +202,7 @@ namespace Controllers{
             var token = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
             try{await authApiServices.RegisterUserAsync(user, token);}
-            catch{return View();}
+            catch{ViewBag.Error="Username already in use.";return View();}
             return RedirectToAction("ManageUsers");
         }
         public async Task<IActionResult> EditUser(string empId){

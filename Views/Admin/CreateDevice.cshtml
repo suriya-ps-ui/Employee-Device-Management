@@ -25,6 +25,9 @@
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-4">
             <h2 class="text-center mb-4">Create @deviceType</h2>
+            @if(ViewBag.Error!=null){
+                <div class="alert alert-danger">@ViewBag.Error</div>
+            }
             <form asp-action="CreateDevice" method="post" class="bg-light p-4 rounded shadow">
                 <input type="hidden" name="empId" value="@empId" />
                 <input type="hidden" name="deviceType" value="@deviceType" />

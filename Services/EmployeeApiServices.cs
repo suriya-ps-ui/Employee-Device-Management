@@ -62,6 +62,7 @@ namespace Services{
         public async Task<EmployeeRequest?> CreateEmployeeAsync(EmployeeRequest employee, string token)
         {
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            employee.isAvilable=true;
             var content = new StringContent(JsonSerializer.Serialize(employee), System.Text.Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync("Employee/Employees", content);
             if (!response.IsSuccessStatusCode)
