@@ -11,8 +11,11 @@ namespace Services{
         public async Task<List<Employee>> GetAllEmployeesAsync(){
             return await assetManagementContext.Employees.Where(e=>e.isAvilable==true).Include(e=>e.Laptops).Include(e=>e.Mouses).Include(e=>e.Keyboards).ToListAsync();
         }
+        public async Task<List<Employee>> PastEmployeesAsync(){
+            return await assetManagementContext.Employees.Where(e=>e.isAvilable==false).Include(e=>e.Laptops).Include(e=>e.Mouses).Include(e=>e.Keyboards).ToListAsync();
+        }
         public async Task<Employee> GetEmployeeByIDAsync(string id){
-            var employee=await assetManagementContext.Employees.Where(e=>e.isAvilable==true).Include(e=>e.Laptops).Include(e=>e.Mouses).Include(e=>e.Keyboards).FirstOrDefaultAsync(e=>e.empId==id);
+            var employee=await assetManagementContext.Employees.Include(e=>e.Laptops).Include(e=>e.Mouses).Include(e=>e.Keyboards).FirstOrDefaultAsync(e=>e.empId==id);
             if(employee==null){
                 throw new Exception("No employee with that ID.");
             }

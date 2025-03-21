@@ -18,6 +18,14 @@ namespace Controllers{
             var employees=await employeeService.GetAllEmployeesAsync();
             return Ok(employees);
         }
+        
+        [HttpGet("Employees/Past")]
+        [Authorize(Roles="Admin")]
+        public async Task<IActionResult> GetAllPastEmployees(){
+            var employees=await employeeService.PastEmployeesAsync();
+            return Ok(employees);
+        }
+
         [HttpGet("Employees/{empId}")]
         [Authorize]
         public async Task<IActionResult> GetEmployee(string empId){
