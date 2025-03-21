@@ -25,6 +25,16 @@ namespace Services{
             }
             return new List<Employee>();
         }
+        public async Task<List<Employee>> GetPastEmployeesAsync(string token)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await httpClient.GetAsync("Employee/Employees/Past");
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonSerializer.Deserialize<List<Employee>>(await response.Content.ReadAsStringAsync()) ?? new List<Employee>();
+            }
+            return new List<Employee>();
+        }
 
         public async Task<Employee?> GetEmployeeByIdAsync(string empId, string token)
         {

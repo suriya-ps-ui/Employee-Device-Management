@@ -6,11 +6,11 @@ namespace Controllers{
         IAuthApiServices authApiServices;
         IEmployeeApiServices employeeApiServices;
         IDeviceApiServices deviceApiServices;
-        public AdminController(IAuthApiServices authApiServices,IEmployeeApiServices employeeServices,IDeviceApiServices deviceApiServices){
+        public AdminController(IAuthApiServices authApiServices,IEmployeeApiServices employeeApiServices,IDeviceApiServices deviceApiServices){
             this.authApiServices=authApiServices;
-            this.employeeApiServices=employeeServices;
+            this.employeeApiServices=employeeApiServices;
             this.deviceApiServices=deviceApiServices;
-        }
+        }       
         public IActionResult Index(){
             return View();
         }
@@ -18,6 +18,12 @@ namespace Controllers{
             var token=HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login","Account");
             var employees=await employeeApiServices.GetAllEmployeesAsync(token);
+            return View(employees);
+        }
+        public async Task<IActionResult> PastEmployees(){
+            var token=HttpContext.Session.GetString("JWToken");
+            if (string.IsNullOrEmpty(token)) return RedirectToAction("Login","Account");
+            var employees=await employeeApiServices.GetPastEmployeesAsync(token);
             return View(employees);
         }
         public IActionResult CreateEmployee(){
@@ -28,7 +34,8 @@ namespace Controllers{
         public async Task<IActionResult> CreateEmployee(EmployeeRequest employee){
             var token = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
-            await employeeApiServices.CreateEmployeeAsync(employee, token);
+            try{await employeeApiServices.CreateEmployeeAsync(employee, token);}
+            catch(Exception ex){ModelState.AddModelError("",$"Creation failed:{ex.Message}"); return View();}
             return RedirectToAction("ManageEmployees");
         }
         public async Task<IActionResult> EditEmployee(string empId){
@@ -82,7 +89,8 @@ namespace Controllers{
                     assignedOn=DateOnly.Parse(Request.Form["assignedOn"]),
                     status=Request.Form["status"]
                 };
-                await deviceApiServices.CreateLaptopAsync(laptop, token);
+                try{await deviceApiServices.CreateLaptopAsync(laptop, token);}
+                catch(Exception){RedirectToAction("CreateDevice");}
             }
             else if (deviceType=="Keyboard"){
                 var keyboard=new Keyboard{
@@ -92,8 +100,8 @@ namespace Controllers{
                     keyBrand=Request.Form["keyBrand"],
                     status=Request.Form["status"]
                 };
-                await deviceApiServices.CreateKeyboardAsync(keyboard, token);
-            }
+                try{await deviceApiServices.CreateKeyboardAsync(keyboard, token);}
+                catch(Exception){RedirectToAction("CreateDevice");}            }
             else if (deviceType=="Mouse"){
                 var mouse=new Mouse{
                     empId=empId,
@@ -102,8 +110,8 @@ namespace Controllers{
                     mouseBrand=Request.Form["mouseBrand"],
                     status=Request.Form["status"]
                 };
-                await deviceApiServices.CreateMouseAsync(mouse,token);
-            }
+                try{await deviceApiServices.CreateMouseAsync(mouse, token);}
+                catch(Exception){RedirectToAction("CreateDevice");}            }
             return RedirectToAction("ManageDevices",new { empId });
         }
         public async Task<IActionResult> EditDevice(string empId,string deviceType,string id){
@@ -190,7 +198,8 @@ namespace Controllers{
         public async Task<IActionResult> CreateUser(RegisterRequest user){
             var token = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
-            await authApiServices.RegisterUserAsync(user, token);
+            try{await authApiServices.RegisterUserAsync(user, token);}
+            catch{return View();}
             return RedirectToAction("ManageUsers");
         }
         public async Task<IActionResult> EditUser(string empId){
