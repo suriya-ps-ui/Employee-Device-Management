@@ -1,19 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Controllers
-{
-    public class HomeController : Controller
-    {
-        public IActionResult Index()
-        {
+namespace Controllers{
+    public class HomeController : Controller{
+        public IActionResult Index(){
             var token = HttpContext.Session.GetString("JWToken");
-            if (string.IsNullOrEmpty(token))
-            {
+            if (string.IsNullOrEmpty(token)){
                 ViewData["IsAuthenticated"] = false;
             }
-            else
-            {
+            else{
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var jwtToken = tokenHandler.ReadJwtToken(token);
                 ViewData["IsAuthenticated"] = true;

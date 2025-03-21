@@ -26,26 +26,26 @@
             <h2 class="text-center mb-4">Create User</h2>
             <form action="CreateUser" method="post" class="bg-light p-4 rounded shadow">
                 <div class="mb-3">
-                    <label asp-for="username" class="form-label">Username</label>
-                    <input asp-for="username" class="form-control" placeholder="Enter username" required />
+                    <label name="username" class="form-label">Username</label>
+                    <input name="username" class="form-control" placeholder="Enter username" required />
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="password" class="form-label">Password</label>
-                    <input asp-for="password" type="password" class="form-control" placeholder="Enter password" required />
+                    <label name="password" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" placeholder="Enter password" required />
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="role" class="form-label">Role</label>
-                    <select asp-for="role" class="form-select" required>
+                    <label name="role" class="form-label">Role</label>
+                    <select name="role" class="form-select" required>
                         <option value="Admin">Admin</option>
                         <option value="Employee">Employee</option>
                     </select>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="empId" class="form-label">Employee ID</label>
-                    <input asp-for="empId" class="form-control" placeholder="Enter employee ID" required />
+                    <label name="empId" class="form-label">Employee ID</label>
+                    <input name="empId" class="form-control" placeholder="Enter employee ID" required />
                 </div>
 
                 <div class="d-flex justify-content-between">

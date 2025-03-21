@@ -1,5 +1,3 @@
-using EmployeeDeviceManagementMVC.Services;
-using Models;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +13,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddHttpClient<IAuthApiServices, AuthApiServices>();
 builder.Services.AddHttpClient<IDeviceApiServices, DeviceApiServices>();
-builder.Services.AddHttpClient<IEmployeeServices, EmployeeApiServices>();
+builder.Services.AddHttpClient<IEmployeeApiServices, EmployeeApiServices>();
 
 var app = builder.Build();
 

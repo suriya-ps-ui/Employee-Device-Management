@@ -33,6 +33,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Department</th>
+                            <th>Availability</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -43,6 +44,7 @@
                                 <td>@employee.empId</td>
                                 <td>@employee.empName</td>
                                 <td>@employee.department</td>
+                                <td>@employee.isAvilable</td>
                                 <td>
                                     <a href="/Admin/EditEmployee?empId=@employee.empId" class="btn btn-sm btn-warning">Edit</a>
                                     <a href="/Admin/DeleteEmployee?empId=@employee.empId" class="btn btn-sm btn-danger">Delete</a>

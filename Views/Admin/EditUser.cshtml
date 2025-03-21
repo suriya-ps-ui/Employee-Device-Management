@@ -25,21 +25,21 @@
         <div class="col-md-6 col-lg-4">
             <h2 class="text-center mb-4">Edit User</h2>
             <form asp-action="EditUser" method="post" class="bg-light p-4 rounded shadow">
-                <input type="hidden" asp-for="empId" />
+                <input type="hidden" name="empId" />
                 
                 <div class="mb-3">
-                    <label asp-for="username" class="form-label">Username</label>
-                    <input asp-for="username" class="form-control" value="@Model.username" required />
+                    <label name="username" class="form-label">Username</label>
+                    <input name="username" class="form-control" value="@Model.username" required />
                 </div>
                 
                 <div class="mb-3">
-                    <label asp-for="password" class="form-label">Password</label>
-                    <input asp-for="password" type="password" class="form-control" placeholder="Enter password" />
+                    <label name="password" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" placeholder="Enter password" />
                 </div>
                 
                 <div class="mb-3">
-                    <label asp-for="role" class="form-label">Role</label>
-                    <select asp-for="role" class="form-select" required>
+                    <label name="role" class="form-label">Role</label>
+                    <select name="role" class="form-select" required>
                         <option value="Admin">Admin</option>
                         <option value="Employee">Employee</option>
                     </select>

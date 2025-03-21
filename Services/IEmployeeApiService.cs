@@ -1,6 +1,6 @@
 using Models;
 namespace Services{
-    public interface IEmployeeServices{
+    public interface IEmployeeApiServices{
         Task<List<Employee>> GetAllEmployeesAsync(string token);
         Task<Employee?> GetEmployeeByIdAsync(string empId,string token);
         Task<EmployeeRequest?> CreateEmployeeAsync(EmployeeRequest employee, string token);

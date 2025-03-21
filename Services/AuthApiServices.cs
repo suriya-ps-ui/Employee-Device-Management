@@ -1,8 +1,8 @@
 using System.Net.Http.Headers;
 using System.Text.Json;
-using Services;
+using Models;
 
-namespace Models{
+namespace Services{
     public class AuthApiServices:IAuthApiServices{
         HttpClient httpClient;
         IConfiguration configuration;

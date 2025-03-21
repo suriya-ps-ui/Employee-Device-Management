@@ -3,12 +3,10 @@ using System.Text.Json;
 using Models;
 using Services;
 
-namespace EmployeeDeviceManagementMVC.Services
-{
-    public class EmployeeApiServices : IEmployeeServices
-    {
-        private readonly HttpClient httpClient;
-        private readonly IConfiguration configuration;
+namespace Services{
+    public class EmployeeApiServices : IEmployeeApiServices   {
+        HttpClient httpClient;
+        IConfiguration configuration;
 
         public EmployeeApiServices(HttpClient httpClient, IConfiguration configuration)
         {

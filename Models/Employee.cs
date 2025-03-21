@@ -3,6 +3,7 @@ namespace Models{
         public required string empId{get;set;}
         public required string empName{get;set;}
         public required string department{get;set;}
+        public  required bool isAvilable{get;set;}
         public List<Laptop>? laptops{get;set;}
         public List<Keyboard>? keyboards{get;set;}
         public List<Mouse>? mouses{get;set;}
@@ -11,5 +12,6 @@ namespace Models{
         public required string empId{get;set;}
         public required string empName{get;set;}
         public required string department{get;set;}
+        public  required bool  isAvilable{get;set;}
     }
 }

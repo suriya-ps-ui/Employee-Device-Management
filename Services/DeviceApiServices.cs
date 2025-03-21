@@ -3,20 +3,17 @@ using System.Text.Json;
 using Models;
 namespace Services
 {
-    public class DeviceApiServices : IDeviceApiServices
-    {
-        private readonly HttpClient httpClient;
-        private readonly IConfiguration configuration;
+    public class DeviceApiServices : IDeviceApiServices{
+        HttpClient httpClient;
+        IConfiguration configuration;
 
-        public DeviceApiServices(HttpClient httpClient, IConfiguration configuration)
-        {
+        public DeviceApiServices(HttpClient httpClient, IConfiguration configuration){
             this.httpClient = httpClient;
             this.configuration = configuration;
             httpClient.BaseAddress = new Uri(configuration["ApiBaseUrl"] ?? throw new Exception("Base API Url is null."));
         }
 
-        public async Task<List<Laptop>> GetLaptopsAsync(string empId, string token)
-        {
+        public async Task<List<Laptop>> GetLaptopsAsync(string empId, string token){
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await httpClient.GetAsync($"Laptop/Employees/{empId}/Laptops");
             return response.IsSuccessStatusCode
