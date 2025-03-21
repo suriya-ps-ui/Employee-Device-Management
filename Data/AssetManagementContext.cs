@@ -38,7 +38,7 @@ namespace Data{
 
             // Seed initial users
             modelBuilder.Entity<Employee>().HasData(
-                new Employee{empId="E1",empName="Suriya",department="DotNet"}
+                new Employee{empId="E1",empName="Suriya",department="DotNet",isAvilable=true}
             );
             modelBuilder.Entity<User>().HasData(
                 new User{id=1,userName="admin",password="admin",role="Admin",empId=null},

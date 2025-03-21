@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeDeviceManagementAPI.Migrations
 {
     [DbContext(typeof(AssetManagementContext))]
-    partial class AssetManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20250321054925_modifyModel")]
+    partial class modifyModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,8 +39,9 @@ namespace EmployeeDeviceManagementAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("isAvilable")
-                        .HasColumnType("bit");
+                    b.Property<string>("isAvilable")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("empId");
 
@@ -49,7 +53,7 @@ namespace EmployeeDeviceManagementAPI.Migrations
                             empId = "E1",
                             department = "DotNet",
                             empName = "Suriya",
-                            isAvilable = true
+                            isAvilable = "true"
                         });
                 });
 

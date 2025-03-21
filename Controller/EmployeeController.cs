@@ -33,8 +33,10 @@ namespace Controllers{
             var employee=new Employee{
                 empId=employeeRequest.empId,
                 empName=employeeRequest.empName,
-                department=employeeRequest.department
+                department=employeeRequest.department,
+                isAvilable=employeeRequest.isAvilable
             };
+            System.Console.WriteLine("It comming here");
             var newEmployee=await employeeService.CreateEmployeeAsync(employee);
             return CreatedAtAction(nameof(GetEmployee),new{empId=newEmployee.empId},newEmployee);
         }
@@ -45,7 +47,8 @@ namespace Controllers{
             var employee=new Employee{
                 empId=employeeRequest.empId,
                 empName=employeeRequest.empName,
-                department=employeeRequest.department
+                department=employeeRequest.department,
+                isAvilable=employeeRequest.isAvilable
             };
             await employeeService.UpdateEmployeeAsync(empId,employee);
             return NoContent();

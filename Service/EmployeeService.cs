@@ -9,10 +9,10 @@ namespace Services{
             this.assetManagementContext=assetManagementContext;
         }
         public async Task<List<Employee>> GetAllEmployeesAsync(){
-            return await assetManagementContext.Employees.Include(e=>e.Laptops).Include(e=>e.Mouses).Include(e=>e.Keyboards).ToListAsync();
+            return await assetManagementContext.Employees.Where(e=>e.isAvilable==true).Include(e=>e.Laptops).Include(e=>e.Mouses).Include(e=>e.Keyboards).ToListAsync();
         }
         public async Task<Employee> GetEmployeeByIDAsync(string id){
-            var employee=await assetManagementContext.Employees.Include(e=>e.Laptops).Include(e=>e.Mouses).Include(e=>e.Keyboards).FirstOrDefaultAsync(e=>e.empId==id);
+            var employee=await assetManagementContext.Employees.Where(e=>e.isAvilable==true).Include(e=>e.Laptops).Include(e=>e.Mouses).Include(e=>e.Keyboards).FirstOrDefaultAsync(e=>e.empId==id);
             if(employee==null){
                 throw new Exception("No employee with that ID.");
             }
@@ -37,7 +37,7 @@ namespace Services{
             if(employee==null){
                 throw new Exception("Employee not found.");
             }
-            assetManagementContext.Remove(employee);
+            employee.isAvilable=false;
             await assetManagementContext.SaveChangesAsync();
         }
     }
