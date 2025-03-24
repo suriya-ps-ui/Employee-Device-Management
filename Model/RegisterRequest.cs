@@ -3,6 +3,6 @@ namespace Model{
         public required string username{get;set;}
         public required string Password{get;set;}
         public required string role{get;set;}
-        public required string empId{get;set;}
+        public  string? empId{get;set;}
     }
 }
