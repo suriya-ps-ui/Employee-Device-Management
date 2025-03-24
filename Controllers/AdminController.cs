@@ -202,7 +202,7 @@ namespace Controllers{
             var token = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
             try{await authApiServices.RegisterUserAsync(user, token);}
-            catch{ViewBag.Error="Username already in use or Invalid E.ID.";return View();}
+            catch{ViewBag.Error="Username already in use or Invalid E-ID.";return View();}
             return RedirectToAction("ManageUsers");
         }
         public async Task<IActionResult> EditUser(string empId){
@@ -228,7 +228,8 @@ namespace Controllers{
         public async Task<IActionResult> DeleteUser(string empId){
             var token = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
-            await authApiServices.DeleteUserAsync(empId, token);
+            try{await authApiServices.DeleteUserAsync(empId, token);}
+            catch{ViewBag.Error="Admin Can't be removed.";}
             return RedirectToAction("ManageUsers");
         }
     }

@@ -25,7 +25,9 @@
         <div class="col-12">
             <h2 class="text-center mb-4">Manage Users</h2>
             <p class="text-center"><a href="/Admin/CreateUser" class="btn btn-primary">Add User</a></p>
-            
+            @if(ViewBag.Error!=null){
+                <div class="alert alert-danger">@ViewBag.Error</div>
+            }
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
                     <thead class="table-dark">
