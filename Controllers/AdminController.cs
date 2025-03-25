@@ -76,7 +76,8 @@ namespace Controllers{
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateDevice(string empId,string deviceType,[FromForm] object device){
+        [ActionName("CreateDevice")]
+        public async Task<IActionResult> CreateDevicePost(string empId,string deviceType){
             var token=HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
             if (deviceType=="Laptop"){
@@ -139,7 +140,8 @@ namespace Controllers{
             return RedirectToAction("ManageDevices", new { empId });
         }
         [HttpPost]
-        public async Task<IActionResult> EditDevice(string empId, string deviceType, string id, [FromForm] object device){
+        [ActionName("EditDevice")]
+        public async Task<IActionResult> EditDevicePost(string empId, string deviceType, string id){
             var token = HttpContext.Session.GetString("JWToken");
             if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
             if (deviceType == "Laptop"){
